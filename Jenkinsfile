@@ -11,13 +11,13 @@ pipeline {
         stage('Install dependencies') {
             steps {
                 // Install dependencies
-                sh 'pip3 install -r Results-Chatbot/requirements.txt'
+                sh 'pip3 install -r requirements.txt'
             }
         }
         stage('Run application') {
             steps {
                 // Run the application
-                sh 'nohup python3 Results-Chatbot/app.py &'
+                sh 'nohup python3 app.py &'
             }
         }
     }
