@@ -17,7 +17,7 @@ pipeline {
         stage('Run application') {
             steps {
                 // Run the application
-                sh 'nohup python3 app.py'
+                sh 'nohup python3 app.py &'
             }
         }
     }
