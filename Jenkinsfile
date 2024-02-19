@@ -14,11 +14,6 @@ pipeline {
                 sh 'pip3 install -r requirements.txt'
             }
         }
-        stage('Confirm start') {
-            steps {
-                input "Please confirm that you're ready to start the application"
-            }
-        }
         stage('Run application') {
             steps {
                 // Run the application
