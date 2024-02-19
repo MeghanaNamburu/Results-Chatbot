@@ -6,6 +6,8 @@ import matplotlib.pyplot as plt
 import requests
 from io import BytesIO
 
+print("Code Started")
+
 # Function to download file from GitHub repository
 def download_file(url):
     response = requests.get(url)
@@ -140,3 +142,5 @@ while True:
     except Exception as e:
         print(f"Error: {e}")
         time.sleep(10)
+
+print("Code Ended")
