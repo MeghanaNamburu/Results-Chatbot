@@ -1,8 +1,8 @@
-#import telebot
+import telebot
 import pandas as pd
-#import ast
-#import time
-#import matplotlib.pyplot as plt
+import ast
+import time
+import matplotlib.pyplot as plt
 
 print("Hello all")
 
