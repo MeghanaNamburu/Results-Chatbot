@@ -1,5 +1,5 @@
 #import telebot
-#import pandas as pd
+import pandas as pd
 #import ast
 #import time
 #import matplotlib.pyplot as plt
