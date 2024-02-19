@@ -1,4 +1,4 @@
-import telebot
+import telegram
 import pandas as pd
 import ast
 import time
