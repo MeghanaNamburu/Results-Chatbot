@@ -2,23 +2,35 @@ pipeline {
     agent any
     
     stages {
-        stage('Checkout') {
+        stage('Clone repository') {
             steps {
-                // Checkout the repository
-                git branch: 'main', url: 'https://github.com/MeghanaNamburu/Results-Chatbot.git'
+                // Remove existing directory if present
+                deleteDir()
+                
+                // Clone the repository
+                sh 'git clone https://github.com/MeghanaNamburu/Results-Chatbot.git'
             }
         }
+        
         stage('Install dependencies') {
             steps {
-                // Install dependencies
-                sh 'pip3 install -r requirements.txt'
+                // Change directory to Results-Chatbot
+                dir('Results-Chatbot') {
+                    // Install dependencies
+                    sh 'pip3 install -r requirements.txt'
+                }
             }
         }
+        
         stage('Run application') {
             steps {
-                // Run the application
-                sh 'nohup python3 app.py &'
+                // Change directory to Results-Chatbot
+                dir('Results-Chatbot') {
+                    // Run the application
+                    sh 'nohup python3 app.py &'
+                }
             }
         }
     }
 }
+
