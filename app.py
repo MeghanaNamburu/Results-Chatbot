@@ -3,32 +3,19 @@ import pandas as pd
 import ast
 import time
 import matplotlib.pyplot as plt
-import requests
-from io import BytesIO
-
-# Function to download file from GitHub repository
-def download_file(url):
-    response = requests.get(url)
-    if response.status_code == 200:
-        return BytesIO(response.content)
-    else:
-        return None
 
 attendanceFlag = 0
-resultsFlag = 0
+resultsFlag = 0 
 semresultsFlag = 0
 performanceFlag = 0
 
-results_url = 'https://raw.githubusercontent.com/MeghanaNamburu/Results-Chatbot/main/results.xlsx'
-attendance_url = 'https://raw.githubusercontent.com/MeghanaNamburu/Results-Chatbot/main/attendance.xlsx'
-
-data = pd.read_excel(download_file(results_url))
+data = pd.read_excel("results.xlsx")
 data = data.iloc[:, :].values
 data = list(data)
 Rollno = []
 for i in data:
     Rollno.append(i[0])
-data1 = pd.read_excel(download_file(attendance_url))
+data1 = pd.read_excel("attendance.xlsx")
 data1 = data1.iloc[:, :].values
 data1 = list(data1)
 
