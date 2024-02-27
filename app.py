@@ -101,15 +101,28 @@ def handle_message(message):
             rollindex = Rollno.index(i)
             semesters = ['Semester 1', 'Semester 2', 'Semester 3', 'Semester 4', 'Semester 5', 'Semester 6', 'Semester 7', 'Semester 8']
             marks = [data[rollindex][1], data[rollindex][2], data[rollindex][3], data[rollindex][4], data[rollindex][5], data[rollindex][6], data[rollindex][7], data[rollindex][8]]
+             # Line Graph
             plt.plot(semesters, marks)
             plt.xlabel('Semester')
             plt.ylabel('Marks')
-            plt.title('Academic Performance')
+            plt.title('Academic Performance (Line Graph)')
             plt.xticks(rotation=45)
             plt.grid(True)
             plt.tight_layout()
-            plt.savefig('academic_performance.png')
-            bot.send_photo(int(chat_id), open('academic_performance.png', 'rb'))
+            plt.savefig('{i}_LineGraph.png')
+            bot.send_photo(int(chat_id), open('{i}_LineGraph.png', 'rb'))
+            plt.close()
+
+            # Bar Graph
+            plt.bar(semesters, marks, color='skyblue')
+            plt.xlabel('Semester')
+            plt.ylabel('Marks')
+            plt.title('Academic Performance (Bar Graph)')
+            plt.xticks(rotation=45)
+            plt.grid(True)
+            plt.tight_layout()
+            plt.savefig('{i}_BarGraph.png')
+            bot.send_photo(int(chat_id), open('{i}_BarGraph.png', 'rb'))
             plt.close()
 
     if flag == 0:
@@ -123,7 +136,7 @@ bot.set_update_listener(listener)
 
 while True:
     try:
-        bot.polling(none_stop=True, timeout=120)
+        bot.polling(none_stop=True)
     except Exception as e:
         print(f"Error: {e}")
         time.sleep(10)
