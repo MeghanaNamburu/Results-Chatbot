@@ -136,7 +136,7 @@ bot.set_update_listener(listener)
 
 while True:
     try:
-        bot.polling(none_stop=True)
+        bot.polling(none_stop=True, timeout=120)
     except Exception as e:
         print(f"Error: {e}")
         time.sleep(10)
