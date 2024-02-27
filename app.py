@@ -35,7 +35,7 @@ def handle_results_request(message):
 @bot.message_handler(commands=['attendance'])
 def handle_attendance_request(message):
     global attendanceFlag
-    bot.reply_to(message, "Please enter student ID for which you want to check attendance:")
+    bot.reply_to(message, "Please enter the student ID for which you want to check attendance:")
     attendanceFlag = 1
 
 @bot.message_handler(commands=['SemWiseResults'])
