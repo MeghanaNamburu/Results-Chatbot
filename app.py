@@ -1,54 +1,62 @@
 import telebot
 import pandas as pd
 import ast
-import time
+import threading
 import matplotlib.pyplot as plt
 
+data = pd.read_excel("results.xlsx")
+data1 = pd.read_excel("attendance.xlsx")
+Rollno = data.iloc[:, 0].tolist()
+
+token = '6755073728:AAEWDBuKOC-cRS-moIxFh3LgBALrDvCoUH4'
+bot = telebot.TeleBot(token, parse_mode=None)
+
+# Flags for different actions
 attendanceFlag = 0
-resultsFlag = 0 
+resultsFlag = 0
 semresultsFlag = 0
 performanceFlag = 0
 
-data = pd.read_excel("results.xlsx")
-data = data.iloc[:, :].values
-data = list(data)
-Rollno = []
-for i in data:
-    Rollno.append(i[0])
-data1 = pd.read_excel("attendance.xlsx")
-data1 = data1.iloc[:, :].values
-data1 = list(data1)
-
-token = '6820671223:AAFBI9sr2_hd3Kwq_IV_1z6VR22R3dBfpM8'
-bot = telebot.TeleBot(token, parse_mode=None)
-
-@bot.message_handler(commands=['start', 'help'])
 def send_welcome(message):
     bot.reply_to(message, "Welcome to students result and attendance check bot, what do you want to know? \n 1. /attendance \n 2. /cgpaAndPercentage \n 3. /SemWiseResults \n 4. /performanceGraph")
 
-@bot.message_handler(commands=['cgpaAndPercentage'])
 def handle_results_request(message):
     global resultsFlag
     bot.reply_to(message, "Please enter the student ID to which you want to check cgpa and percentage:")
     resultsFlag = 1
 
-@bot.message_handler(commands=['attendance'])
 def handle_attendance_request(message):
     global attendanceFlag
     bot.reply_to(message, "Please enter the student ID for which you want to check attendance:")
     attendanceFlag = 1
 
-@bot.message_handler(commands=['SemWiseResults'])
-def handle_results_request(message):
+def handle_semresults_request(message):
     global semresultsFlag
     bot.reply_to(message, "Please enter the student ID to which you want to check sem wise results:")
     semresultsFlag = 1
 
-@bot.message_handler(commands=['performanceGraph'])
-def handle_academic_performance_request(message):
+def handle_performance_request(message):
     global performanceFlag
     bot.reply_to(message, "Please enter the student ID to visualize academic performance:")
     performanceFlag = 1
+
+def process_message(message):
+    global attendanceFlag, resultsFlag, semresultsFlag, performanceFlag
+
+    message_data = ast.literal_eval(str(message))
+    chat_id = message_data['from_user']['id']
+    student_id = message_data['text'].upper()
+
+    if '/attendance' in message_data['text']:
+        handle_attendance_request(message)
+    elif '/cgpaAndPercentage' in message_data['text']:
+        handle_results_request(message)
+    elif '/SemWiseResults' in message_data['text']:
+        handle_semresults_request(message)
+    elif '/performanceGraph' in message_data['text']:
+        handle_performance_request(message)
+    else:
+        bot.send_message(chat_id, "Invalid command")
 
 @bot.message_handler(regexp="[a-zA-Z0-9_]")
 def handle_message(message):
@@ -130,13 +138,7 @@ def handle_message(message):
 
 def listener(messages):
     for m in messages:
-        print(str(m))
+        threading.Thread(target=process_message, args=(m,)).start()
 
 bot.set_update_listener(listener)
-
-while True:
-    try:
-        bot.polling(none_stop=True, timeout=120)
-    except Exception as e:
-        print(f"Error: {e}")
-        time.sleep(10)
+bot.polling()
