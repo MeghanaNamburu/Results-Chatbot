@@ -81,8 +81,8 @@ def handle_message(message):
             resultsFlag = 0
             flag = 1
             rollindex = Rollno.index(i)
-            att = data[rollindex][10]
-            agg = data[rollindex][9]
+            att = data[rollindex][9]
+            agg = data[rollindex][8]
             bot.send_message(int(chat_id), f'Hey! Nice meeting you.\nYour Registered Numbers is {i}.\nYour academic percentage is {att}%.\nYour aggregate is {agg}.\n\nThank You')
             
         # Sem wise results
@@ -90,17 +90,15 @@ def handle_message(message):
             semresultsFlag = 0
             flag = 1
             rollindex = Rollno.index(i)
-            att = data[rollindex][10]
-            agg = data[rollindex][9]
-            bot.send_message(int(chat_id), f'Hey! Nice meeting you.\nYour Registered Numbers is {i}.\nHere are your sem wise results.\nSemester 1: {data[rollindex][1]}\nSemester 2: {data[rollindex][2]}\nSemester 3: {data[rollindex][3]}\nSemester 4: {data[rollindex][4]}\nSemester 5: {data[rollindex][5]}\nSemester 6: {data[rollindex][6]}\nSemester 7: {data[rollindex][7]}\nSemester 8: {data[rollindex][8]}\n\nThank You')
+            bot.send_message(int(chat_id), f'Hey! Nice meeting you.\nYour Registered Numbers is {i}.\nHere are your sem wise results.\nSemester 1: {data[rollindex][1]}\nSemester 2: {data[rollindex][2]}\nSemester 3: {data[rollindex][3]}\nSemester 4: {data[rollindex][4]}\nSemester 5: {data[rollindex][5]}\nSemester 6: {data[rollindex][6]}\nSemester 7: {data[rollindex][7]}\n\nThank You')
             
         # Academic Performance (Line Graph)
         if i == student_id and performanceFlag == 1:
             performanceFlag = 0
             flag = 1
             rollindex = Rollno.index(i)
-            semesters = ['Semester 1', 'Semester 2', 'Semester 3', 'Semester 4', 'Semester 5', 'Semester 6', 'Semester 7', 'Semester 8']
-            marks = [data[rollindex][1], data[rollindex][2], data[rollindex][3], data[rollindex][4], data[rollindex][5], data[rollindex][6], data[rollindex][7], data[rollindex][8]]
+            semesters = ['Semester 1', 'Semester 2', 'Semester 3', 'Semester 4', 'Semester 5', 'Semester 6', 'Semester 7']
+            marks = [data[rollindex][1], data[rollindex][2], data[rollindex][3], data[rollindex][4], data[rollindex][5], data[rollindex][6], data[rollindex][7]]
              # Line Graph
             plt.plot(semesters, marks)
             plt.xlabel('Semester')
